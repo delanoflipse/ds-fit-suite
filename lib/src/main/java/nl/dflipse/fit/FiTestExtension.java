@@ -167,7 +167,11 @@ public class FiTestExtension
 
             faultload.timer.start();
             faultload.timer.start("registerFaultload");
-            controller.registerFaultload(faultload);
+            try {
+                controller.registerFaultload(faultload);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to register faultload", e);
+            }
             faultload.timer.stop("registerFaultload");
             faultload.timer.start("testMethod");
         }
