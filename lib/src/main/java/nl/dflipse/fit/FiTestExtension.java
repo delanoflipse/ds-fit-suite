@@ -24,6 +24,7 @@ import nl.dflipse.fit.strategy.StrategyRunner;
 import nl.dflipse.fit.strategy.TrackedFaultload;
 import nl.dflipse.fit.strategy.analyzers.BreadthFirstDetector;
 import nl.dflipse.fit.strategy.analyzers.ConditionalFaultDetector;
+import nl.dflipse.fit.strategy.analyzers.DepthFirstDetector;
 import nl.dflipse.fit.strategy.analyzers.RedundancyAnalyzer;
 import nl.dflipse.fit.strategy.analyzers.StatusAnalyzer;
 import nl.dflipse.fit.strategy.generators.IncreasingSizeGenerator;
@@ -66,9 +67,9 @@ public class FiTestExtension
         strategy = new StrategyRunner()
                 .withComponent(new IncreasingSizeGenerator(modes))
                 // .withGenerator(new IncreasingSizeMixedGenerator(modes))
-                // .withAnalyzer(new RandomDetector())
+                // .withComponent(new RandomDetector())
                 .withComponent(new BreadthFirstDetector())
-                // .withAnalyzer(new DepthFirstDetector())
+                // .withComponent(new DepthFirstDetector())
                 .withComponent(new ConditionalFaultDetector())
                 .withComponent(new RedundancyAnalyzer())
                 .withComponent(new StatusAnalyzer())
@@ -224,7 +225,7 @@ public class FiTestExtension
             // var annotation = testMethod.getAnnotation(FiTest.class);
 
             boolean testFailed = context.getExecutionException().isPresent();
-            logger.info("Result: " + (testFailed ? "FAIL" : "PASS"));
+            logger.info("Invariant: " + (testFailed ? "VIOLATED" : "HOLDS"));
 
             strategy.statistics.registerRun();
 

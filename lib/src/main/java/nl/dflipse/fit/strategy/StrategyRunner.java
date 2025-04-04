@@ -18,6 +18,7 @@ public class StrategyRunner {
 
     private Generator generator = null;
 
+    private final List<Object> components = new ArrayList<>();
     private final List<FeedbackHandler> analyzers = new ArrayList<>();
     private final List<Pruner> pruners = new ArrayList<>();
     private final List<Reporter> reporters = new ArrayList<>();
@@ -63,6 +64,8 @@ public class StrategyRunner {
     }
 
     public StrategyRunner withComponent(Object component) {
+        components.add(component);
+
         if (component instanceof Generator generator) {
             this.generator = generator;
         }
@@ -88,6 +91,10 @@ public class StrategyRunner {
 
     public Generator getGenerator() {
         return generator;
+    }
+
+    public List<Object> getComponents() {
+        return components;
     }
 
     public List<Reporter> getReporters() {

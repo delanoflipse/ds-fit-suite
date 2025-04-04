@@ -1,6 +1,5 @@
 package nl.dflipse.fit.strategy;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,6 +34,18 @@ public class StrategyReporter {
         return set.stream().mapToInt(String::length).max().orElse(0);
     }
 
+    private void printKeyValue(String key, String value, int keyPadding) {
+        printLine(StringFormat.padRight(key, keyPadding) + " : " + value);
+    }
+
+    public void reportStrategy() {
+        printNewline();
+        printLine(StringFormat.padBoth(" Strategy Components ", maxChars, "="));
+        for (var component : runner.getComponents()) {
+            printLine(component.getClass().getSimpleName());
+        }
+    }
+
     public void reportOverall() {
         long totalGenerated = statistics.getTotalGenerated();
         long totalPruned = statistics.getTotalPruned();
@@ -53,10 +64,6 @@ public class StrategyReporter {
         report.put("Total directly pruned", totalPruned + " (" + prunePercentage + "% of generated)");
         report.put("Total run", totalRun + " (" + runPercentage + "% of full space)");
         printReport("Statistics", report);
-    }
-
-    private void printKeyValue(String key, String value, int keyPadding) {
-        printLine(StringFormat.padRight(key, keyPadding) + " : " + value);
     }
 
     public void reportGeneratorStats() {
@@ -137,6 +144,7 @@ public class StrategyReporter {
     }
 
     public void report() {
+        reportStrategy();
         reportOverall();
         reportGeneratorStats();
         reportPrunerStats();

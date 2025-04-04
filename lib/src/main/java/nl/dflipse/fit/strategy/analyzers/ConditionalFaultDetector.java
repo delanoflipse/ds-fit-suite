@@ -55,7 +55,8 @@ public class ConditionalFaultDetector implements FeedbackHandler {
                         .count() == 1;
 
                 // And there is exactly of these
-                boolean isRetry = happyPathOnlyHasOne && retriedFaults.size() == 1;
+                // boolean isRetry = happyPathOnlyHasOne && retriedFaults.size() == 1;
+                boolean isRetry = false;
 
                 if (isRetry) {
                     FaultUid retriedFault = Sets.getOnlyElement(retriedFaults);
